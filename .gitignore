@@ -1,0 +1,18 @@
+# Ambientes virtuais
+venvVIDEOCEFS/
+.venv/
+.env
+
+# Arquivos gerados
+audios/
+videos/
+trancricoes/
+
+# Python
+__pycache__/
+*.pyc
+*.log
+*.tmp
+
+# IDEs
+.vscode/
