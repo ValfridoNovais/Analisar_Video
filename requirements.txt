@@ -23,7 +23,7 @@ jiter==0.10.0
 jsonschema==4.25.0
 jsonschema-specifications==2025.4.1
 MarkupSafe==3.0.2
-moviepy==2.2.1
+moviepy>=1.0.3
 narwhals==1.47.1
 numpy==2.3.1
 openai==1.97.0

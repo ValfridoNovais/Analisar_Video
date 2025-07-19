@@ -24,10 +24,11 @@ PASTAS = {
 # === FUNÇÃO 1: Extração de áudio do vídeo ===
 def extrair_audio(video_path, audio_path):
     """
-    Extrai o áudio de um vídeo (.mp4, .mov...) e salva como .wav
+    Extrai o áudio de um vídeo (.mp4, .mov...) e salva como .mp3
     """
     video = VideoFileClip(video_path)
-    video.audio.write_audiofile(audio_path)
+    # ALTERAÇÃO 1: Salvar com codec mp3 para comprimir o arquivo
+    video.audio.write_audiofile(audio_path, codec='mp3')
     return audio_path
 
 # === FUNÇÃO 2: Transcrição com Whisper-1 (OpenAI API) ===
@@ -102,7 +103,8 @@ if video_escolhido:
     # Caminhos e nomes baseados em timestamp
     video_path = os.path.join(PASTAS["videos"], video_escolhido)
     nome_base = os.path.splitext(video_escolhido)[0] + "_" + datetime.now().strftime("%Y%m%d%H%M")
-    audio_path = os.path.join(PASTAS["audios"], nome_base + ".wav")
+    # ALTERAÇÃO 2: Usar a extensão .mp3
+    audio_path = os.path.join(PASTAS["audios"], nome_base + ".mp3")
     trans_path = os.path.join(PASTAS["trancricoes"], nome_base + ".txt")
 
     # Inputs manuais: fardamento e grau de leitura
@@ -111,7 +113,7 @@ if video_escolhido:
 
     # Botão principal de execução
     if st.button("▶️ Processar vídeo"):
-        with st.spinner("🎞️ Extraindo áudio do vídeo..."):
+        with st.spinner("🎞️ Extraindo e comprimindo áudio do vídeo..."):
             extrair_audio(video_path, audio_path)
 
         with st.spinner("🧠 Transcrevendo com Whisper..."):
