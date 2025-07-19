@@ -1,140 +1,129 @@
-# 🎓 Analisador de Vídeos - CEFS (Curso Especial de Formação de Sargentos)
+Com certeza! A sua preocupação é muito pertinente. Um bom `README` é a porta de entrada do projeto e, para compartilhar com colegas, ele precisa ser impecável, claro e completo.
 
-Este projeto em Python com Streamlit automatiza a análise de vídeos submetidos por alunos do CEFS. Ele extrai o áudio, realiza transcrição com o modelo `whisper-1` da OpenAI e gera uma avaliação com base em critérios definidos no barema da disciplina de Análise Criminal. A análise é gerada via `gpt-4o-mini`, otimizando custo e desempenho.
+Analisei o seu `README` atual e ele já é muito bom, mas podemos aprimorá-lo para refletir as últimas e mais importantes funcionalidades que você adicionou. As mudanças o deixarão mais claro para um usuário que está vendo o projeto pela primeira vez.
 
+Abaixo está uma versão revisada e mais completa. Eu a coloquei dentro de um bloco de código para que você possa copiar e colar sem problemas de renderização.
 
-```
-TITULO 1: 🎓 Analisador de Vídeos - CEFS (Curso Especial de Formação de Sargentos)
+### README.md Revisado e Pronto para Compartilhar
 
-Este projeto em Python utiliza Streamlit para criar uma interface web que automatiza a análise de vídeos submetidos por alunos do CEFS. A aplicação extrai o áudio do vídeo, realiza a transcrição com o modelo `whisper-1` da OpenAI e, em seguida, utiliza o `gpt-4o-mini` para gerar uma avaliação detalhada com base em critérios pré-definidos, otimizando o processo de correção e feedback.
+```markdown
+# 🎓 Painel de Avaliação de Vídeos - CEFS
 
----
+Este projeto em Python utiliza Streamlit para criar um painel de controle completo que automatiza e gerencia a análise de vídeos submetidos por alunos do Curso Especial de Formação de Sargentos (CEFS).
 
-TITULO 2: 🎯 Funcionalidades Principais
-
-1.  **Interface Web Intuitiva:** Utiliza Streamlit para oferecer uma interface simples onde o avaliador pode selecionar o vídeo a ser analisado.
-2.  **Extração e Compressão de Áudio:** O áudio do vídeo é extraído e salvo no formato **MP3**. Essa compressão é **essencial** para garantir que o arquivo de áudio não ultrapasse o limite de 25 MB da API do Whisper.
-3.  **Transcrição Automática:** O arquivo de áudio é enviado para a API da OpenAI, que utiliza o modelo `whisper-1` para gerar uma transcrição textual precisa do discurso do aluno.
-4.  **Inputs Manuais do Avaliador:** A interface permite que o avaliador humano insira observações que a IA não pode verificar pelo áudio, como:
-    *   Adequação do fardamento.
-    *   Grau de leitura observado durante a apresentação.
-5.  **Análise com IA:** A transcrição e as observações manuais são enviadas ao modelo `gpt-4o-mini`, que atua como um avaliador virtual, gerando:
-    *   Nota final (de 0 a 2,0).
-    *   Pontuação detalhada por critério.
-    *   Feedback com pontos fortes e sugestões de melhoria.
-6.  **Armazenamento Organizado:** Todos os artefatos gerados (áudio, transcrição e avaliação final) são salvos em pastas específicas, com nomes de arquivo padronizados com data e hora para fácil rastreamento.
+A aplicação lê o roteiro oficial do trabalho (em PDF) para garantir que as avaliações sejam precisas e consistentes. Ela extrai o áudio dos vídeos, transcreve com a API da OpenAI (`whisper-1`) e utiliza um modelo de linguagem (`gpt-4o-mini`) para gerar uma avaliação detalhada, que fica salva em um histórico permanente para consulta futura.
 
 ---
 
-TITULO 2: 📁 Estrutura de Pastas
+## 🎯 Funcionalidades Principais
 
-BLOCO DE CÓDIGO (bash):
+-   **Análise Baseada em Documento Oficial:** O sistema utiliza um arquivo PDF como fonte da verdade, garantindo que a IA aplique exatamente os mesmos critérios e baremas que um avaliador humano.
+-   **Painel de Controle Unificado:** A interface, dividida em colunas, permite realizar novas análises e consultar avaliações passadas no mesmo local.
+-   **Histórico Permanente:** Todas as avaliações geradas são salvas na pasta `/resposta` e podem ser acessadas a qualquer momento através de um menu suspenso no painel.
+-   **Extração e Compressão de Áudio:** O áudio é extraído dos vídeos e comprimido para o formato MP3, evitando erros de upload para a API da OpenAI (que tem um limite de 25 MB).
+-   **Transcrição e Avaliação por IA:** Utiliza os modelos mais eficientes da OpenAI para transcrever o áudio e gerar uma análise formatada, com pontuação, nota final e feedback construtivo.
+-   **Armazenamento Organizado:** Todos os arquivos gerados (áudios, transcrições, avaliações) são salvos em pastas dedicadas e nomeados com data e hora para fácil rastreamento.
+
+---
+
+## 📁 Estrutura de Pastas
+
+```bash
 Analisar_Video/
 │
-├── app.py                      # Aplicação principal (Streamlit)
-├── .env                        # Contém a OPENAI_API_KEY (NÃO versionar)
-├── .gitignore                  # Arquivos e pastas ignoradas pelo Git
-├── README.md                   # Este arquivo
-├── requirements.txt            # Dependências do projeto
+├── app.py                                  # Aplicação principal (Streamlit)
+├── CEFS_2025_Roteiro de trabalho (1).pdf   # Documento base para a IA
+├── .env                                    # Contém a OPENAI_API_KEY (NÃO versionar)
+├── .gitignore                              # Arquivos e pastas ignoradas pelo Git
+├── README.md                               # Este arquivo
+├── requirements.txt                        # Dependências do projeto
 │
-├── videos/                     # (Entrada) Vídeos brutos (.mp4, .mov)
-├── audios/                     # (Saída) Áudios extraídos e comprimidos (.mp3)
-├── trancricoes/                # (Saída) Transcrições geradas (.txt)
-├── resposta/                   # (Saída) Avaliações finais (.txt e .md)
-└── venvVIDEOCEFS/              # Ambiente virtual do projeto (NÃO versionar)
-FIM DO BLOCO DE CÓDIGO
+├── videos/                                 # (Entrada) Vídeos brutos (.mp4, .mov)
+├── audios/                                 # (Saída) Áudios extraídos e comprimidos (.mp3)
+├── trancricoes/                            # (Saída) Transcrições geradas (.txt)
+├── resposta/                               # (Saída) Avaliações salvas (.txt, .md)
+└── venvVIDEOCEFS/                          # Ambiente virtual do projeto (NÃO versionar)
+```
 
 ---
 
-TITULO 2: 🧪 Tecnologias Utilizadas
+## 🧪 Tecnologias Utilizadas
 
-- **Python 3.9+**
-- **Streamlit:** Para a interface web interativa.
-- **OpenAI API:** Para transcrição (`whisper-1`) e avaliação (`gpt-4o-mini`).
-- **MoviePy:** Para extração de áudio dos vídeos.
-- **python-dotenv:** Para carregar a chave da API de forma segura a partir de um arquivo `.env`.
+-   **Python 3.9+**
+-   **Streamlit:** Para a interface web interativa.
+-   **OpenAI API:** Para transcrição (`whisper-1`) e avaliação (`gpt-4o-mini`).
+-   **MoviePy:** Para extração de áudio dos vídeos.
+-   **PyMuPDF:** Para extrair o texto do arquivo de roteiro em PDF.
+-   **python-dotenv:** Para carregar a chave da API de forma segura.
 
 ---
 
-TITULO 2: 📦 Instalação e Execução
+## 📦 Instalação e Execução
 
-TITULO 3: 1. Pré-requisitos
+Siga os passos abaixo para configurar e executar o projeto em seu computador.
 
-- **Python** instalado.
-- **FFmpeg:** `moviepy` depende do FFmpeg para processar áudio e vídeo. Se você não o tiver, pode instalá-lo a partir do [site oficial](https://ffmpeg.org/download.html) e garantir que ele esteja no PATH do seu sistema.
+### 1. Pré-requisitos
 
-TITULO 3: 2. Configuração do Ambiente
+-   **Python** instalado (versão 3.9 ou superior).
+-   **FFmpeg:** `moviepy` depende do FFmpeg para processar mídias. Se não o tiver, instale a partir do [site oficial](https://ffmpeg.org/download.html) e garanta que ele esteja acessível no PATH do seu sistema.
 
-Clone o repositório e crie o ambiente virtual:
-BLOCO DE CÓDIGO (bash):
+### 2. Configuração do Ambiente
+
+Primeiro, clone o repositório (ou baixe e extraia o ZIP) e crie um ambiente virtual para isolar as dependências.
+
+```bash
+# Opcional: Clone o repositório se estiver usando Git
 git clone <url_do_repositorio>
 cd Analisar_Video
+
+# Crie e ative o ambiente virtual
 python -m venv venvVIDEOCEFS
-# No Windows
+
+# No Windows:
 venvVIDEOCEFS\Scripts\activate
-# No macOS/Linux
+
+# No macOS/Linux:
 # source venvVIDEOCEFS/bin/activate
-FIM DO BLOCO DE CÓDIGO
+```
 
-TITULO 3: 3. Chave da API
+### 3. Chave da API da OpenAI
 
-Crie um arquivo chamado `.env` na raiz do projeto e adicione sua chave da OpenAI:
-BLOCO DE CÓDIGO:
+Crie um arquivo chamado `.env` na pasta raiz do projeto. Dentro dele, adicione sua chave da API da OpenAI.
+
+```
 OPENAI_API_KEY="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-FIM DO BLOCO DE CÓDIGO
+```
 
-TITULO 3: 4. Instalação das Dependências
+### 4. Instalação das Dependências
 
-Instale as bibliotecas listadas no `requirements.txt`:
-BLOCO DE CÓDIGO (bash):
+Com o ambiente virtual ativado, instale todas as bibliotecas necessárias de uma só vez usando o arquivo `requirements.txt`.
+
+```bash
 pip install -r requirements.txt
-FIM DO BLOCO DE CÓDIGO
+```
 
 > #### ⚠️ **Atenção à Versão do `moviepy`**
-> O arquivo `requirements.txt` deve especificar **exatamente** a versão `moviepy==1.0.3`. Existe um fork não oficial da biblioteca com uma versão `2.x` que é frequentemente instalada por padrão pelo `pip`, mas que possui uma estrutura de módulos diferente e **causa erros** de importação (`ModuleNotFoundError: No module named 'moviepy.editor'`). Para garantir a compatibilidade, a versão deve ser fixada.
+> O arquivo `requirements.txt` deste projeto já fixa a versão correta (`moviepy==1.0.3`). Isso é crucial porque a instalação padrão do `pip` pode buscar uma versão `2.x` de um fork não oficial, que causa erros de importação e quebra a aplicação.
 
-TITULO 3: 5. Execução da Aplicação
+### 5. Execução da Aplicação
 
-Com o ambiente virtual ativado, execute o Streamlit:
-BLOCO DE CÓDIGO (bash):
+Finalmente, execute o comando abaixo no terminal. O painel de controle será aberto automaticamente no seu navegador.
+
+```bash
 streamlit run app.py
-FIM DO BLOCO DE CÓDIGO
-A aplicação será aberta no seu navegador.
+```
 
 ---
 
-TITULO 2: 🧾 Barema Aplicado (Peso Total: 2,0 pts)
+## 🔏 Segurança e Privacidade
 
-| Critério | Faixa de Pontos |
-| :--- | :--- |
-| Introdução e indicação do tema | 0 a 0,3 |
-| Explicação da metodologia do indicador | 0 a 0,5 |
-| Domínio do conteúdo (sem leitura excessiva) | 0 a 0,3 |
-| Pertinência do conteúdo ao tema | 0 a 0,3 |
-| Conclusão e importância profissional | 0 a 0,3 |
-| Requisitos formais (tempo, uniforme, presença) | 0 a 0,3 |
+-   **NUNCA** envie seu arquivo `.env` para repositórios públicos ou compartilhe sua chave de API.
+-   O arquivo `.gitignore` já está configurado para proteger pastas com dados sensíveis (vídeos, áudios, etc.) e arquivos de configuração.
 
 ---
 
-TITULO 2: 🔐 Segurança
-
-- **NUNCA** envie seu arquivo `.env` para repositórios públicos.
-- O arquivo `.gitignore` deste projeto já está configurado para ignorar o `.env`, o ambiente virtual e as pastas de mídia (`videos`, `audios`, etc.), protegendo dados sensíveis.
-
----
-
-TITULO 2: 🧠 Autor
+## 🧠 Autor
 
 Desenvolvido por Valfrido Novais – [@valfridonovais](https://instagram.com/valfridonovais)  
 Projetado para uso educacional no Curso Especial de Formação de Sargentos da PMMG.
 ```
-
-**Instruções para reformatar:**
-1.  Substitua `TITULO 1:` por `#`
-2.  Substitua `TITULO 2:` por `##`
-3.  Substitua `TITULO 3:` por `###`
-4.  Substitua `BLOCO DE CÓDIGO (bash):` por ` ```bash `
-5.  Substitua `BLOCO DE CÓDIGO:` por ` ``` `
-6.  Substitua `FIM DO BLOCO DE CÓDIGO` por ` ``` `
-
-Peço desculpas novamente pelo transtorno. Esta abordagem deve funcionar sem problemas.
