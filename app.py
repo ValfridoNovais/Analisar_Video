@@ -21,7 +21,7 @@ PASTAS = {
     "resposta": os.path.join(BASE_DIR, "resposta")
 }
 
-# === FUNÇÕES (sem alterações aqui) ===
+# === FUNÇÕES ===
 def extrair_audio(video_path, audio_path):
     video = VideoFileClip(video_path)
     video.audio.write_audiofile(audio_path, codec='mp3')
@@ -41,28 +41,27 @@ def carregar_contexto_pdf(pdf_path):
         st.error(f"Erro ao ler o arquivo PDF de contexto: {e}")
         return None
 
-def analisar_trabalho(transcricao, fardamento, leitura, contexto_pdf):
+def analisar_trabalho(transcricao, fardamento, leitura, contexto_pdf, comentarios_extra):
     prompt = f"""
 Você é um membro da banca avaliadora do Curso Especial de Formação de Sargentos (CEFS) da PMMG.
 Sua tarefa é avaliar uma instrução em vídeo gravada por um aluno, usando estritamente as regras e critérios definidos no documento oficial do curso.
 
 ---
 CONTEXTO - DOCUMENTO OFICIAL DO TRABALHO (Roteiro e Barema):
-\"\"\"
-{contexto_pdf}
-\"\"\"
+\"\"\"{contexto_pdf}\"\"\"
 ---
 
 AVALIAÇÃO DO ALUNO:
 
 1. TRANSCRIÇÃO DO VÍDEO DO ALUNO:
-\"\"\"
-{transcricao}
-\"\"\"
+\"\"\"{transcricao}\"\"\"
 
 2. OBSERVAÇÕES DO AVALIADOR HUMANO:
 - Fardamento utilizado: {fardamento}
 - Grau de leitura observado (0=nenhuma, 5=total): {leitura}
+
+3. COMENTÁRIOS ADICIONAIS DO AVALIADOR:
+- {comentarios_extra if comentarios_extra.strip() else "Nenhum."}
 
 ---
 SUA MISSÃO:
@@ -125,9 +124,9 @@ with col1:
     if video_escolhido:
         fardamento = st.selectbox("👔 Fardamento:", ["Adequado", "Inadequado"])
         leitura = st.slider("📖 Grau de leitura:", 0, 5, 2)
+        comentarios_extra = st.text_area("🗒️ Comentários adicionais do avaliador (opcional):")
 
         if st.button("▶️ Processar e Avaliar Vídeo"):
-            # ... (Lógica de processamento que você já tem)
             video_path = os.path.join(PASTAS["videos"], video_escolhido)
             nome_base = os.path.splitext(video_escolhido)[0] + "_" + datetime.now().strftime("%Y%m%d%H%M")
             audio_path = os.path.join(PASTAS["audios"], nome_base + ".mp3")
@@ -142,18 +141,15 @@ with col1:
                     texto = transcrever_whisper(audio_path)
                     with open(trans_path, "w", encoding="utf-8") as f:
                         f.write(texto)
-                    resultado = analisar_trabalho(texto, fardamento, leitura, contexto_pdf)
+                    resultado = analisar_trabalho(texto, fardamento, leitura, contexto_pdf, comentarios_extra)
                     salvar_resposta(resultado, nome_base)
                 
                 st.success("Avaliação concluída e salva!")
-                # Força um refresh para que a nova avaliação apareça na lista da direita
                 st.rerun()
 
 # --- COLUNA 2: Histórico Permanente de Avaliações ---
 with col2:
     st.header("📜 Histórico de Avaliações Salvas")
-
-    # Lista todos os arquivos .txt na pasta de respostas, do mais novo para o mais antigo
     try:
         arquivos_resposta = sorted(
             [f for f in os.listdir(PASTAS["resposta"]) if f.endswith(".txt")],
@@ -167,7 +163,6 @@ with col2:
     if not arquivos_resposta:
         st.info("Nenhuma avaliação foi salva na pasta de respostas ainda.")
     else:
-        # Cria um seletor para o usuário escolher qual avaliação ver
         arquivo_selecionado = st.selectbox(
             "Selecione uma avaliação para visualizar:",
             arquivos_resposta,
@@ -175,7 +170,6 @@ with col2:
             placeholder="Escolha uma avaliação do histórico..."
         )
 
-        # Se o usuário escolheu um arquivo, lê e exibe seu conteúdo
         if arquivo_selecionado:
             caminho_arquivo = os.path.join(PASTAS["resposta"], arquivo_selecionado)
             with open(caminho_arquivo, "r", encoding="utf-8") as f:
@@ -185,7 +179,6 @@ with col2:
             st.subheader(f"Visualizando: {arquivo_selecionado}")
             st.markdown(conteudo_avaliacao, unsafe_allow_html=True)
 
-            # Botão de download para o arquivo selecionado
             st.download_button(
                 label="📥 Baixar esta avaliação (.txt)",
                 data=conteudo_avaliacao,

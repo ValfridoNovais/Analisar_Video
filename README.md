@@ -102,6 +102,17 @@ Com o ambiente virtual ativado, instale todas as bibliotecas necessárias de uma
 pip install -r requirements.txt
 ```
 
+### 🗒️ Comentários Adicionais do Avaliador
+
+Durante a avaliação, o avaliador humano pode inserir observações manuais complementares, como:
+
+- "A conclusão foi superficial e não abordou a importância do indicador"
+- "O vídeo teve duração superior ao limite de 180 segundos"
+- "O aluno demonstrou domínio oral, mesmo com pequenas pausas"
+
+Essas informações são passadas diretamente ao modelo GPT para reavaliar os critérios e ajustar a pontuação, especialmente nos itens como **Conclusão** ou **Requisitos formais**.
+
+
 > #### ⚠️ **Atenção à Versão do `moviepy`**
 > O arquivo `requirements.txt` deste projeto já fixa a versão correta (`moviepy==1.0.3`). Isso é crucial porque a instalação padrão do `pip` pode buscar uma versão `2.x` de um fork não oficial, que causa erros de importação e quebra a aplicação.
 
